@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.View;
 
 public class ChartView extends View {
@@ -13,6 +15,8 @@ public class ChartView extends View {
     public static int DEFAULT_SPACE = 10;
 
     private int mChartSpace = DEFAULT_SPACE;
+    private int mPercenTextAbove = 30;
+
     private ChartData mChartData_1;
     private ChartData mChartData_2;
 
@@ -70,7 +74,7 @@ public class ChartView extends View {
         Point point = new Point();
         point.y = getHeight() - (getHeight() * percent / 100);
         point.x = getBottomRightPointChart1().x + (
-                ((((getWidth() / 3) * 2) - mChartSpace) - getBottomRightPointChart1().x) * mChartData_1.percent / 100);
+                ((((getWidth() / 3) * 2) - mChartSpace) - getBottomRightPointChart1().x) * percent / 100);
         return point;
     }
 
@@ -78,7 +82,7 @@ public class ChartView extends View {
         Point point = new Point();
         point.y = getHeight() - (getHeight() * percent / 100);
         point.x = (getWidth() / 3) - mChartSpace;
-        point.x = (((getWidth() / 3) - mChartSpace) - getBottomLeftPointChart1().x) * mChartData_1.percent / 100;
+        point.x = (((getWidth() / 3) - mChartSpace) - getBottomLeftPointChart1().x) * percent / 100;
         return point;
     }
 
@@ -100,53 +104,64 @@ public class ChartView extends View {
     public Point getTopRightPointChart2(int percent) {
         Point point = new Point();
         point.y = getHeight() - (getHeight() * percent / 100);
-        point.x = getBottomRightPointChart2().x + ((getWidth() - getBottomRightPointChart2().x) * mChartData_2.percent
-                / 100);
+        point.x = getBottomRightPointChart2().x + ((getWidth() - getBottomRightPointChart2().x) * percent / 100);
         return point;
     }
 
     public Point getTopLeftPointChart2(int percent) {
         Point point = new Point();
         point.y = getHeight() - (getHeight() * percent / 100);
-        point.x = getBottomLeftPointChart2().x + (
-                (getBottomRightPointChart2().x - getBottomLeftPointChart2().x) * mChartData_2.percent / 100);
+        point.x =
+                getBottomLeftPointChart2().x + ((getBottomRightPointChart2().x - getBottomLeftPointChart2().x) * percent
+                        / 100);
         return point;
     }
 
-
     public void showPercentChart1(Canvas canvas) {
-        int textPosition = 15;
-        if (mChartData_1.getPercent() > 40) {
-            textPosition = -15;
+        String text = String.valueOf(mChartData_1.getPercent()) + "%";
+
+        int textPosition = 10;
+        if (mChartData_1.getPercent() > mPercenTextAbove) {
+            textPosition = -10;
         }
         Point pointLeft = getTopLeftPointChart1(mChartData_1.getPercent() + textPosition);
         Point pointRight = getTopRightPointChart1(mChartData_1.getPercent() + textPosition);
 
-        Paint textPaint = new Paint();
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(50);
-        textPaint.setTextAlign(Paint.Align.CENTER);
+        Paint textPaint = getText(Color.BLACK);
 
         canvas.drawText(String.valueOf(mChartData_1.getPercent()) + "%",
-                pointLeft.x + (pointRight.x - pointLeft.x) / 2 , pointLeft.y, textPaint);
+                pointLeft.x + (pointRight.x - pointLeft.x) / 2, pointLeft.y + getHeightText(textPaint, text) / 2,
+                textPaint);
     }
 
 
     public void showPercentChart2(Canvas canvas) {
-        int textPosition = 15;
-        if (mChartData_2.getPercent() > 40) {
-            textPosition = -15;
+        String text = String.valueOf(mChartData_2.getPercent()) + "%";
+        int textPosition = 10;
+        if (mChartData_2.getPercent() > mPercenTextAbove) {
+            textPosition = -10;
         }
         Point pointLeft = getTopLeftPointChart2(mChartData_2.getPercent() + textPosition);
         Point pointRight = getTopRightPointChart2(mChartData_2.getPercent() + textPosition);
 
+        Paint textPaint = getText(Color.BLACK);
+        canvas.drawText(text, pointLeft.x + (pointRight.x - pointLeft.x) / 2,
+                pointLeft.y + getHeightText(textPaint, text) / 2, getText(Color.BLACK));
+    }
+
+    private Paint getText(int textColor) {
         Paint textPaint = new Paint();
-        textPaint.setColor(Color.BLACK);
+        textPaint.setColor(textColor);
+        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         textPaint.setTextSize(50);
         textPaint.setTextAlign(Paint.Align.CENTER);
+        return textPaint;
+    }
 
-        canvas.drawText(String.valueOf(mChartData_2.getPercent()) + "%",
-                pointLeft.x + (pointRight.x - pointLeft.x) / 2, pointLeft.y, textPaint);
+    private int getHeightText(Paint textPaint, String text) {
+        Rect bounds = new Rect();
+        textPaint.getTextBounds(text, 0, text.length(), bounds);
+        return bounds.height();
     }
 
     public void setChartData_1(ChartData chartData_1) {
