@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         ChartView chartView = new ChartView(this);
         chartView.setChartData_1(new ChartView.ChartData(40, Color.RED));
         chartView.setChartData_2(new ChartView.ChartData(80, Color.BLUE));
+        chartView.setDefaultSpace(ChartView.DEFAULT_SPACE);
 
         frameLayout.addView(chartView);
     }

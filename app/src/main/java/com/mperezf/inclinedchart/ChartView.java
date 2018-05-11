@@ -10,10 +10,12 @@ import android.view.View;
 
 public class ChartView extends View {
 
-    public static int CHART_SPACE = 10;
+    public static int DEFAULT_SPACE = 10;
 
-    ChartData mChartData_1;
-    ChartData mChartData_2;
+    private int mChartSpace = DEFAULT_SPACE;
+    private ChartData mChartData_1;
+    private ChartData mChartData_2;
+
     public ChartView(Context context) {
         super(context);
     }
@@ -55,7 +57,7 @@ public class ChartView extends View {
     public Point getBottomRightPointChart1() {
         Point point = new Point();
         point.y = getHeight();
-        point.x = (getWidth() / 3) - CHART_SPACE;
+        point.x = (getWidth() / 3) - mChartSpace;
         return point;
     }
 
@@ -64,15 +66,15 @@ public class ChartView extends View {
         Point point = new Point();
         point.y = getHeight() - (getHeight() * mChartData_1.percent / 100);
         point.x = getBottomRightPointChart1().x + (
-                ((((getWidth() / 3) * 2) - CHART_SPACE) - getBottomRightPointChart1().x) * mChartData_1.percent / 100);
+                ((((getWidth() / 3) * 2) - mChartSpace) - getBottomRightPointChart1().x) * mChartData_1.percent / 100);
         return point;
     }
 
     public Point getTopLeftPointChart1() {
         Point point = new Point();
         point.y = getHeight() - (getHeight() * mChartData_1.percent / 100);
-        point.x = (getWidth() / 3) - CHART_SPACE;
-        point.x = (((getWidth() / 3) - CHART_SPACE) - getBottomLeftPointChart1().x) * mChartData_1.percent / 100;
+        point.x = (getWidth() / 3) - mChartSpace;
+        point.x = (((getWidth() / 3) - mChartSpace) - getBottomLeftPointChart1().x) * mChartData_1.percent / 100;
         return point;
     }
 
@@ -80,21 +82,22 @@ public class ChartView extends View {
     public Point getBottomLeftPointChart2() {
         Point point = new Point();
         point.y = getHeight();
-        point.x = (getWidth() / 3) + CHART_SPACE;
+        point.x = (getWidth() / 3) + mChartSpace;
         return point;
     }
 
     public Point getBottomRightPointChart2() {
         Point point = new Point();
         point.y = getHeight();
-        point.x = ((getWidth() / 3) * 2) + CHART_SPACE;
+        point.x = ((getWidth() / 3) * 2) + mChartSpace;
         return point;
     }
 
     public Point getTopRightPointChart2() {
         Point point = new Point();
         point.y = getHeight() - (getHeight() * mChartData_2.percent / 100);
-        point.x = getBottomRightPointChart2().x + ((getWidth() - getBottomRightPointChart2().x) * mChartData_2.percent / 100);
+        point.x = getBottomRightPointChart2().x + ((getWidth() - getBottomRightPointChart2().x) * mChartData_2.percent
+                / 100);
         return point;
     }
 
@@ -115,17 +118,19 @@ public class ChartView extends View {
         mChartData_2 = chartData_2;
     }
 
+    public void setDefaultSpace(int chartSpace) {
+        mChartSpace = chartSpace;
+    }
 
     public static class ChartData {
 
         int percent;
         int color;
 
-        public ChartData(int percent, int color) {
+        ChartData(int percent, int color) {
             this.percent = percent;
             this.color = color;
         }
-
 
         public int getPercent() {
             return percent;
