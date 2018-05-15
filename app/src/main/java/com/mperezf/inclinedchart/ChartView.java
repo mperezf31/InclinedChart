@@ -153,7 +153,7 @@ public class ChartView extends View {
         Paint textPaint = new Paint();
         textPaint.setColor(textColor);
         textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        textPaint.setTextSize(50);
+        textPaint.setTextSize(getResources().getDimension(R.dimen.chart_percent_size));
         textPaint.setTextAlign(Paint.Align.CENTER);
         return textPaint;
     }

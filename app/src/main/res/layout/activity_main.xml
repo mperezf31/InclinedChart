@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     tools:context=".MainActivity">
 
-
     <FrameLayout
         android:background="@android:color/darker_gray"
         android:id="@+id/chartView"
@@ -15,35 +14,5 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent" />
-
-    <!--
-        <ProgressBar
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:id="@+id/progress_bar"
-            android:layout_alignParentBottom="true"
-            android:layout_height="300dp"
-            android:layout_marginLeft="15dp"
-            android:layout_width="120dp"
-            android:max="1000"
-            android:progress="1000"
-            android:progressDrawable="@drawable/progress_scale_drawable"
-            android:rotation="17"
-            android:translationX="40dp" />
-
-
-        <ProgressBar
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:id="@+id/progress_bar_"
-            android:layout_alignParentBottom="true"
-            android:layout_height="300dp"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/progress_bar"
-            android:layout_width="120dp"
-            android:max="1000"
-            android:progress="500"
-            android:progressDrawable="@drawable/progress_scale_drawable"
-            android:rotation="17"
-            android:translationX="40dp" />-->
-
 
 </RelativeLayout>
